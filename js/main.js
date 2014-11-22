@@ -1,8 +1,19 @@
+/*
+
+  DO NOT READ THIS CODE
+
+  NOT EVEN ONCE
+
+*/
+
+/*
+  WARNING: THIS FUNCTION IS FUCKING ABSURD
+*/
 function getTextPixels(text, size) {
   var canvas = document.createElement("canvas");
   var context = canvas.getContext("2d");
 
-  var font = size + "px Arial";
+  var font = size + "px bold";
 
   // Measure how big the text will be
   context.font = font
@@ -22,6 +33,10 @@ function getTextPixels(text, size) {
   return context.getImageData(0, 0, canvas.width, canvas.height);
 }
 
+/*
+  TURN BACK
+*/
+
 function getTextClosure(text) {
   var t = text;
   var i = 0;
@@ -32,10 +47,43 @@ function getTextClosure(text) {
   }
 }
 
+/*
+  GLOBAL VARIABLES MOTHERFUCKER
+
+  DON'T SAY I DIDN'T WARN YOU
+*/
+
+var osc;
+var gain;
+var context;
+
+function initNoise() {
+  context = new AudioContext();
+
+  osc = context.createOscillator();
+  osc.frequency.value=4000;
+  osc.type = "square"
+  gain = context.createGain();
+
+  gain.gain.value = 0;
+  osc.start();
+
+  osc.connect(gain);
+  gain.connect(context.destination);
+}
+
+function makeNoise() {
+  console.log("noise");
+  gain.gain.setValueAtTime(0.02, context.currentTime);
+  gain.gain.linearRampToValueAtTime(0, context.currentTime + 0.05);
+}
+
 window.onload = function() {
   var data = getTextPixels("404", 30);
   var text = [];
   var getNextChar = getTextClosure("FILENOTFOUND");
+
+  initNoise();
 
   for (var y = 0; y < data.height; y++) {
     var row = []
@@ -55,8 +103,14 @@ window.onload = function() {
 
   var pre = document.getElementById("my_pre");
 
-  var y = 0; var x = 0;
 
+  /*
+    WHY ARE YOU STILL HERE
+
+    THIS NEXT BIT IS THE WORST
+  */
+
+  var y = 0; var x = 0;
   function f() {
     if (y >= data.height) {
       return;
@@ -74,15 +128,24 @@ window.onload = function() {
       c = getNextChar();
       text[y][x] = c;
       pre.innerHTML = squash(text);
-      window.setTimeout(f, 30);
+      makeNoise();
+      window.setTimeout(f, 50);
     } else {
       runInstantly = true;
     }
 
+    /*
+      HOLD ON TO YOUR BUTTS
+    */
     x = (x + 1) % data.width;
     if (x == 0) {
       y++
     }
+    /*
+      WHAT THE ACTUAL FUCK
+
+      WHO WOULD WRITE THAT
+    */
 
     if (runInstantly) {
       f();
@@ -91,3 +154,7 @@ window.onload = function() {
 
   f();
 }
+
+/* 
+  THANK YOU FOR RIDING MR BONES' WILD RIDE
+*/
