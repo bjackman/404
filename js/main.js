@@ -1,6 +1,5 @@
 function getTextPixels(text, size) {
-  // var canvas = document.createElement("canvas");
-  var canvas = document.getElementById("my_canvas");
+  var canvas = document.createElement("canvas");
   var context = canvas.getContext("2d");
 
   var font = size + "px Arial";
@@ -33,7 +32,7 @@ function getTextClosure(text) {
   }
 }
 
-document.onready = function() {
+window.onload = function() {
   var data = getTextPixels("404", 30);
   var text = "";
   var getNextChar = getTextClosure("FILENOTFOUND");
