@@ -45,24 +45,49 @@ window.onload = function() {
     text.push(row);
   }
 
-  console.log(text);
-
-  for (var y = 0; y < data.height; y++) {
-    for (var x = 0; x < data.width; x++) {
-      var pixelIndex = ((y * data.width) + x);
-      var alphaIndex = pixelIndex * 4 + 3;
-      if (data.data[alphaIndex] == undefined) {
-        alert("WHY DOES undefined EVEN EXIST? THROW A FUCKING EXCEPTION!");
-      }
-      if (data.data[alphaIndex] != 0) {
-        c = getNextChar();
-        text[y][x] = c;
-      } 
+  function squash(text) {
+    var ret = "";
+    for (var i = 0; i < text.length; i++) {
+      ret += text[i].join("") + "\n";
     }
+    return ret;
   }
 
   var pre = document.getElementById("my_pre");
-  for (var i = 0; i < text.length; i++) {
-    pre.innerHTML += text[i].join("") + "\n";
+
+  var y = 0; var x = 0;
+
+  function f() {
+    if (y >= data.height) {
+      return;
+    }
+
+    var pixelIndex = ((y * data.width) + x) * 4 + 3;
+
+    if (data.data[pixelIndex] == undefined) {
+      alert("WHY DOES undefined EVEN EXIST? THROW A FUCKING EXCEPTION!");
+    }
+
+    var runInstantly = false;
+
+    if (data.data[pixelIndex] != 0) {
+      c = getNextChar();
+      text[y][x] = c;
+      pre.innerHTML = squash(text);
+      window.setTimeout(f, 30);
+    } else {
+      runInstantly = true;
+    }
+
+    x = (x + 1) % data.width;
+    if (x == 0) {
+      y++
+    }
+
+    if (runInstantly) {
+      f();
+    }
   }
+
+  f();
 }
