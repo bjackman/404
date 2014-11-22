@@ -34,24 +34,35 @@ function getTextClosure(text) {
 
 window.onload = function() {
   var data = getTextPixels("404", 30);
-  var text = "";
+  var text = [];
   var getNextChar = getTextClosure("FILENOTFOUND");
 
   for (var y = 0; y < data.height; y++) {
+    var row = []
     for (var x = 0; x < data.width; x++) {
-      var pixelIndex = ((y * data.width) + x) * 4 + 3;
-      if (data.data[pixelIndex] == undefined) {
-        alert();
-      }
-      if (data.data[pixelIndex] != 0) {
-        text += getNextChar();
-      } else {
-        text += ' ';
-      }
+      row.push(" ");
     }
-    text += "\n"
+    text.push(row);
+  }
+
+  console.log(text);
+
+  for (var y = 0; y < data.height; y++) {
+    for (var x = 0; x < data.width; x++) {
+      var pixelIndex = ((y * data.width) + x);
+      var alphaIndex = pixelIndex * 4 + 3;
+      if (data.data[alphaIndex] == undefined) {
+        alert("WHY DOES undefined EVEN EXIST? THROW A FUCKING EXCEPTION!");
+      }
+      if (data.data[alphaIndex] != 0) {
+        c = getNextChar();
+        text[y][x] = c;
+      } 
+    }
   }
 
   var pre = document.getElementById("my_pre");
-  pre.innerHTML = text;
+  for (var i = 0; i < text.length; i++) {
+    pre.innerHTML += text[i].join("") + "\n";
+  }
 }
