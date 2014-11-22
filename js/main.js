@@ -61,7 +61,7 @@ function initNoise() {
   context = new AudioContext();
 
   osc = context.createOscillator();
-  osc.frequency.value=4000;
+  osc.frequency.value=1000;
   osc.type = "square"
   gain = context.createGain();
 
@@ -74,7 +74,7 @@ function initNoise() {
 
 function makeNoise() {
   console.log("noise");
-  gain.gain.setValueAtTime(0.02, context.currentTime);
+  gain.gain.setValueAtTime(0.08, context.currentTime);
   gain.gain.linearRampToValueAtTime(0, context.currentTime + 0.05);
 }
 
@@ -131,7 +131,7 @@ window.onload = function() {
       makeNoise();
       window.setTimeout(f, 50);
     } else {
-      runInstantly = true;
+      window.setTimeout(f, 10);
     }
 
     /*
