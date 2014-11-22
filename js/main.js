@@ -3,15 +3,22 @@ function getTextPixels(text, size) {
   var canvas = document.getElementById("my_canvas");
   var context = canvas.getContext("2d");
 
-  console.log(context.font);
-  context.font=size + "px monospace";
-  console.log(context.font);
+  var font = size + "px Arial";
+
+  // Measure how big the text will be
+  context.font = font
+
+  // Resize the canvas so it's totally filed by the text.
+  // Seems like usually about 25% is vertical spacing, so knock that off.
   canvas.width = context.measureText(text).width;
-  canvas.height = size;
+  canvas.height = size * 0.75
 
-  console.log(canvas.width, canvas.height);
+  // For some reason resizing the canvas resets the font. I wonder if that's
+  // supposed to happen?
+  // Anyway, set it again
+  context.font = font
 
-  context.fillText(text, 0, size);
+  context.fillText(text, 0, canvas.height);
 
   return context.getImageData(0, 0, canvas.width, canvas.height);
 }
@@ -27,7 +34,7 @@ function getTextClosure(text) {
 }
 
 document.onready = function() {
-  var data = getTextPixels("404", 20);
+  var data = getTextPixels("404", 30);
   var text = "";
   var getNextChar = getTextClosure("FILENOTFOUND");
 
