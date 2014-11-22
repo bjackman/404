@@ -60,11 +60,17 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+
 body {
     height: 100%;
     vertical-align: middle;
+    background-image: url(/background.png);
 }
+
 #my_pre {
+    color: rgba(41, 87, 41, 1);
+    font-weight: bold;
+    font-size: 13pt;
     text-align: center;
     vertical-align: middle;
     height: 100%;
