@@ -60,20 +60,17 @@ textarea {
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+body {
+    height: 100%;
+    vertical-align: middle;
+}
+#my_pre {
+    text-align: center;
+    vertical-align: middle;
+    height: 100%;
+    margin: auto;
+    transform:translate(0, 40%);
+}
 
 /* ==========================================================================
    Media Queries
