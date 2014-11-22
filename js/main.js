@@ -81,7 +81,7 @@ function makeNoise() {
 window.onload = function() {
   var data = getTextPixels("404", 30);
   var text = [];
-  var getNextChar = getTextClosure("FILENOTFOUND");
+  var getNextChar = getTextClosure("FILE_NOT_FOUND_");
 
   initNoise();
 
